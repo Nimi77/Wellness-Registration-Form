@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Raleway:wght@200;300;400;500;600;700;800&display=swap');
 
+/* CSS reset & Normalize */
 *,
 *::before,
 *::after {
@@ -10,6 +11,7 @@
 :root{
     --heading-font:'Raleway', sans-serif;
     --text-font: 'Montserrat', sans-serif;
+    --font-fallback: "Segoe UI", "Roboto","Oxygen", "Ubuntu", "Cantarell", "Helvetica Neue", sans-serif;
     --cl-black: #000B0A;
     --cl-green: #2EC4B6;
     --cl-grey: #737373;
@@ -22,7 +24,6 @@ html{
     tab-size: 4;
     line-height: 1.5;
 }
-
 body { 
     margin: 0;
     line-height: inherit;
@@ -30,8 +31,6 @@ body {
     background:#F7FDFC;
     -webkit-font-smoothing: antialiased;
 }
-
-
 img,
 picture,
 video,
@@ -49,24 +48,20 @@ select {
   color:inherit;
   font-size:100%;
 }
-input,select{
-    font-family: var(--text-font);
-}
-label{
-    font-family: var(--heading-font);
-}
 h1,
 h2,
 h3,
 h4,
 h5,
-h6 {
+h6,
+p {
   overflow-wrap: break-word;
-  font-family: var(--heading-font);
 }
-p{
-    overflow-wrap: break-word;
-    font-family: var(--text-font);
+p,input,select{
+    font-family: var(--text-font, --font-fallback);
+}
+h1,h2,h3,label{
+    font-family: var(--heading-font, --font-fallback);
 }
 a{
     color:inherit;
@@ -78,10 +73,21 @@ a{
     background-color:transparent;
     background-image:none;
 }
+button::-moz-focus-inner,
+[type=button]::-moz-focus-inner,
+[type=reset]::-moz-focus-inner,
+[type=submit]::-moz-focus-inner {
+  border-style: none;
+  padding: 0;
+}
 [type = search]{
     appearance: textfield;
     -webkit-appearance : textfield;
     outline-offset: -2px;
+}
+[type=number]::-webkit-inner-spin-button,
+[type=number]::-webkit-outer-spin-button {
+  height: auto;
 }
 menu, ol, ul{
     list-style:none;
@@ -94,26 +100,21 @@ textarea{
 input::-moz-placeholder, textarea::-moz-placeholder{
     color:var(--general-text-color);
 }
+select{
+    margin: 0;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing:border-box;
+    box-sizing: border-box;
+}
+select:-moz-focusring{
+    color: transparent;
+    text-shadow: 0 0 0 #000;
+}
+select::-ms-expand{
+    display: none;
+}
 [role=button],button{
     cursor:pointer;
-}
-:disabled{
-    cursor:default
-}
-[hidden]{
-    display:none;
-}
-.visually-hidden{
-    position: absolute;
-    height:1px;
-    width:1px;
-    font-size: 14px;
-    overflow: hidden;
-    clip:rect(1px, 1px,1px, 1px);
-    color: #1C181D;
-}
-.visually-hidden:focus{
-    position: unset !important;
 }
 .heading{
     width:100%;
@@ -122,7 +123,8 @@ button{
     outline:none;
     border:none;
 }
-/* css reset end */
+
+/* body element styling */
 .container{
     display: flex;
     justify-content: center;
@@ -140,7 +142,7 @@ button{
     width: 77.333px;
     height: 80px;
     flex-shrink: 0;
-    margin-left: -10px;
+    margin-left: -8px;
     filter: drop-shadow(0px 4px 10px rgba(0, 0, 0, 0.10));
 }
 .left-side-content .text {
@@ -179,16 +181,15 @@ button{
     background-color: #FFF;
     box-shadow: 0px 4px 50px 0px rgba(4, 8, 19, 0.10);
 }
-/* styling for 
-each row and labels, 
+/* styling for each row and labels, 
 input, select */
-form .user-info{ 
+form.reg-form .user-info{ 
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap:15px;
     margin-bottom: 16px;
 }
-form label{
+.reg-form label{
     color:var(--label-text-color);
     font-size: 14px;
     font-style: normal;
@@ -196,31 +197,22 @@ form label{
     line-height: normal;
     letter-spacing: 0.1px;
 }
-form input, select{
+.reg-form input, select{
     border-radius: 2px;
     border: 1px solid var(--cl-gray-3);
     outline: none;
     width:100%;
-    height: 48px;
     margin-top: 6px;
-    padding-block:8px ;
-    padding-inline:14px;
-    transition: all 0.2s ease-out;
+    padding-block:14px ;
+    padding-inline:16px;
+    transition: all 0.2s ease-in;
 }
-form input:focus,
+.reg-form input:focus,
 select:focus{
     border-radius: 2px;
-    border: 3px solid #F7FDFC;
+    border: 2px solid #2EC4B6;
 }
-form select{
-    color:var(--cl-grey);
-    font-size: 14px;
-    font-style: normal;
-    font-weight: 300;
-    line-height: 20px;
-    letter-spacing: 0.2px;
-}
-form input[type="text"], 
+.reg-form input[type="text"], 
 input[type="date"]
 {
     color: #011C34;
@@ -230,12 +222,42 @@ input[type="date"]
     line-height: 20px;
     letter-spacing: 0.2px;
 }
-form.reg-form .stretched{
+input[type="date"]::-webkit-calendar-picker-indicator{
+    display: none;
+}
+.reg-form select{
+    color:var(--cl-grey);
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 300;
+    line-height: 20px;
+    letter-spacing: 0.2px;
+}
+.row-2 .dob{
+    position: relative;
+}
+.row-2 .dob #calendar{
+    position: absolute;
+    top:52%;
+    right:2%;
+}
+.reg-form .stretched{
     display: flex;
     flex-direction: column;
 }
 .reg-form .stretched{
     margin-bottom: 16px;
+}
+.reg-form  .row-5 {
+    position: relative;
+}
+.row-5 #tooglePassword{
+    position: absolute;
+    top: 55%;
+    right:2%;
+    cursor: pointer;
+    font-size: 11px;
+    color:#A6A6A6;
 }
 /* registration button */
 .form-button .button{
@@ -253,9 +275,15 @@ form.reg-form .stretched{
     font-family: 'Raleway', sans-serif;
     background-color: var(--cl-green);
     filter: drop-shadow(0px 10px 40px rgba(0, 0, 0, 0.10));
-}
-.form-button .button:hover{
-    background-color: #26afa1;
+
+    &:hover{
+        background-color: #26afa1;
+    }
+    &:focus{
+        border:2px solid var(--cl-green);
+        outline: none;
+        background-color: #26afa1;
+    }
 }
 .form-container p{
     color: #000;
@@ -263,6 +291,7 @@ form.reg-form .stretched{
     font-style: normal;
     font-weight: 400;
     line-height: 25px;
+    text-align: center;
     margin-block-start: 12px;
 }
 .form-container p > a{
@@ -270,10 +299,26 @@ form.reg-form .stretched{
     font-weight: 500;
     text-decoration-line: underline;
     cursor: pointer;
+
+    &:hover{
+        color:#26afa1; 
+    }
+    &:focus{
+        outline:2px solid #26afa1;
+        text-decoration: none;
+    }
 }
 .right-side-content .agreement p{
     display: none;
 }
+.agreement p > a{
+    color: var(--cl-green);
+    font-weight: 500;
+    text-decoration-line: underline;
+    cursor: pointer;
+}
+
+/* screen responsiveness */
 @media screen and (max-width:768px) {
     .container{
         margin:0 28px;
@@ -283,9 +328,8 @@ form.reg-form .stretched{
     .left-side-content .text > h3{
         font-size: 30px;
     }
-  
 }
-@media screen and (max-width:400px) {
+@media screen and (max-width:500px) {
     .container{
         grid-template-columns: 1fr;
         margin:18px 20px;
@@ -307,31 +351,33 @@ form.reg-form .stretched{
         line-height: 25px; 
     }
     .left-side-content .text > h3{
-        font-size: 30px;
         line-height: normal;
         letter-spacing: -0.8px;
+    }
+    form.reg-form .user-info{
+        grid-template-columns: 1fr;
     }
     .right-side-content .agreement p{
         display: block;
         color: #000;
-        text-align: center;
         font-size: 14px;
         font-style: normal;
         font-weight: 400;
         line-height: 25px;
         margin-block-start: 24px;
     }
-
+    .form-container p{
+        display: none;
+    }
 }
 @media screen and (max-width:375px) {
     .container{
         flex-direction: column;
-        margin:18px 20px;
+        margin:18px 16px;
     }
     .form-container{
-        width:327px;
-        padding-block: 30px;
-        padding-inline: 16px;
+        padding-block: 22px;
+        padding-inline: 10px;
     }
     .form-container form.reg-form{
         display: flex;
@@ -342,9 +388,7 @@ form.reg-form .stretched{
     .reg-form div{
         width:295px;
     }
-    .reg-form .user-info{
-        grid-template-columns: 1fr;
-    }
+  
     .reg-form label{
         font-size: 14px;
         font-weight: 600;
@@ -371,15 +415,8 @@ form.reg-form .stretched{
         line-height: normal;
         letter-spacing: 0.2px;
     }
-    .form-container p{
-        display: none;
-    }
- 
 }
 @media screen and (max-width:320px) {
-    .form-container{
-        width:284px;
-    }
     .reg-form div{
         width:264px;
     }

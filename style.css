@@ -80,6 +80,9 @@ button::-moz-focus-inner,
   border-style: none;
   padding: 0;
 }
+[type=password]::-ms-reveal{
+    display: none;
+}
 [type = search]{
     appearance: textfield;
     -webkit-appearance : textfield;
@@ -88,6 +91,11 @@ button::-moz-focus-inner,
 [type=number]::-webkit-inner-spin-button,
 [type=number]::-webkit-outer-spin-button {
   height: auto;
+  -webkit-appearance: none;
+}
+input[type=date]{
+    appearance: none;
+    -webkit-appearance: listbox;
 }
 menu, ol, ul{
     list-style:none;
@@ -105,6 +113,8 @@ select{
     -webkit-box-sizing: border-box;
     -moz-box-sizing:border-box;
     box-sizing: border-box;
+    -webkit-appearance: none;
+    appearance:none;
 }
 select:-moz-focusring{
     color: transparent;
@@ -202,15 +212,17 @@ form.reg-form .user-info{
     border: 1px solid var(--cl-gray-3);
     outline: none;
     width:100%;
-    margin-top: 6px;
+    margin-top: 8px;
     padding-block:14px ;
     padding-inline:16px;
-    transition: all 0.2s ease-in;
+    transition: border 0.4s ease-in;
 }
 .reg-form input:focus,
 select:focus{
     border-radius: 2px;
     border: 2px solid #2EC4B6;
+    box-shadow: 0px 0px 0px 3px #f2fbfb;
+
 }
 .reg-form input[type="text"], 
 input[type="date"]
@@ -233,13 +245,23 @@ input[type="date"]::-webkit-calendar-picker-indicator{
     line-height: 20px;
     letter-spacing: 0.2px;
 }
+.row-2 .gender{
+    position: relative;
+
+    & .select-icon{
+        position: absolute;
+        top:52%;
+        right:8px;
+    }
+}
 .row-2 .dob{
     position: relative;
-}
-.row-2 .dob #calendar{
-    position: absolute;
-    top:52%;
-    right:2%;
+
+    & #calendar{
+        position: absolute;
+        top:52%;
+        right:8px;
+    }
 }
 .reg-form .stretched{
     display: flex;
@@ -248,13 +270,22 @@ input[type="date"]::-webkit-calendar-picker-indicator{
 .reg-form .stretched{
     margin-bottom: 16px;
 }
+.row-4{
+    position: relative;
+
+    & .select-icon{
+        position: absolute;
+        top:52%;
+        right:8px;
+    }
+}
 .reg-form  .row-5 {
     position: relative;
 }
 .row-5 #tooglePassword{
     position: absolute;
     top: 55%;
-    right:2%;
+    right:8px;
     cursor: pointer;
     font-size: 11px;
     color:#A6A6A6;
